@@ -8,10 +8,17 @@ class Garage
 private:
 	int garSize;
 	string garName;
+	bool isFull;
 	std::vector<Vehicle *> vehicle;
 public:
 	Garage(string garName = "112", int garSize = 1);
 	~Garage();
+
+	/* TODO Search, Print all functions, print types,
+	add vehicle, remove vehicle*/
+
+	// Methods
+
 
 };
 

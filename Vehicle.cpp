@@ -15,7 +15,7 @@ Vehicle::~Vehicle()
 
 
 
-				/* CAR */
+/************* CAR *************/
 
 Car::Car(string regNr, string color, int nrWheel,
 	string carModel, string carMake)
@@ -29,16 +29,18 @@ Car::Car(string regNr, string color, int nrWheel,
 string Car::vehicleInfo()
 {
 	std::stringstream ss;
-	ss << "\n--> Info <--"
-		<< "\nregistration number: " << this->regNr
-		<< "\nMake: " << this->carMake
-		<< "\nModel: " << this->carModel
-		<< "\nColor: " << this->color
-		<< "\nNumber of wheels: " << this->nrWheel
+	ss << "\n--> " << getType() << " Info <--"
+		<< "\nRegistration number: " << getRegNr()
+		<< "\nMake: " << getVspec1()
+		<< "\nModel: " << getVspec2()
+		<< "\nColor: " << getColor()
+		<< "\nNumber of wheels: " << getNrWheel()
 		<< "\n";
 
 	return ss.str();
 }
+
+
 
 
 
