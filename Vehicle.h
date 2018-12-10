@@ -27,7 +27,6 @@ public:
 	virtual int getNrWheel()const = 0;
 
 	// Mutator
-	//virtual void setType() = 0;
 
 };
 
@@ -37,53 +36,57 @@ public:
 class Car : public Vehicle
 {
 private:
-	string carModel;
-	string carMake;
+	bool isNav;
+	bool isWash;
 	const string type{ "Car" };
+
 public:
 	Car(string regNr, string color, int nrWheel,
-		string carModel, string carMake);
+		bool nav, bool wash);
 	~Car();
 
-	//string vehicleInfo()override { return vehicleInfo(); };
 
-	// Getter
-	string getVspec1()const override { return this->carMake; };
-	string getVspec2()const override { return this->carModel; };
-	string getRegNr()const override { return this->regNr; };
-	string getType()const override { return this->type; };
-	string getColor()const override { return this->color; };
-	int getNrWheel()const override { return this->nrWheel; };
+	// Accessors
+	string getVspec1()const override
+	{
+		return this->isWash ? "Cleaning ordered" : "No cleaning";
+	}
+	string getVspec2()const override
+	{
+		return this->isNav ? "Have GPS" : "No GPS";
+	}
+	inline string getRegNr()const override { return this->regNr; };
+	inline string getType()const override { return this->type; };
+	inline string getColor()const override { return this->color; };
+	inline int getNrWheel()const override { return this->nrWheel; };
 
-	// Mutator
-	//void setType() { this->type = "Car"; };
+	// Modifyer
+
 };
 
 
-
-/************* Bicycle *************/
-class Bicycle : public Vehicle
+class Bicycle :public Vehicle
 {
 private:
-	string JetEngine;
-	string RollCage;
+	string jetEngine;
+	string rollCage;
 	const string type{ "Bicycle" };
 public:
 	Bicycle(string regNr, string color, int nrWheel,
-		string JetEngine, string RollCage);
+		string jetEngine, string rollCage);
 	~Bicycle();
 
-	//string vehicleInfo()override { return vehicleInfo(); };
+	// Accessors
+	string getVspec1()const override { return this->jetEngine; };
+	string getVspec2()const override { return this->rollCage; };
+	inline string getRegNr()const override { return this->regNr; };
+	inline string getType()const override { return this->type; };
+	inline string getColor()const override { return this->color; };
+	inline int getNrWheel()const override { return this->nrWheel; };
 
-	// Getter
-	string getVspec1()const override { return this->JetEngine; };
-	string getVspec2()const override { return this->RollCage; };
-	string getRegNr()const override { return this->regNr; };
-	string getType()const override { return this->type; };
-	string getColor()const override { return this->color; };
-	int getNrWheel()const override { return this->nrWheel; };
+	// Modifyer
 
-	// Mutator
-	//void setType() { this->type = "Car"; };
 };
+
+
 #endif // !VEHICLE_H

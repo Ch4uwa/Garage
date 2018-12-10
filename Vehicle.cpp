@@ -7,6 +7,20 @@ Vehicle::Vehicle(string regNr, string color, int nrWheel)
 	LOG("Vehicle ctor");
 }
 
+string Vehicle::vehicleInfo()
+{
+	std::stringstream ss;
+	ss << "\n--> " << getType() << " Info <--"
+		<< "\nRegistration number: " << getRegNr()
+		<< "\n" << getVspec1()
+		<< "\n" << getVspec2()
+		<< "\nColor: " << getColor()
+		<< "\nNumber of wheels: " << getNrWheel()
+		<< "\n";
+
+	return ss.str();
+}
+
 Vehicle::~Vehicle()
 {
 	LOG("Vehicle dtor");
@@ -18,30 +32,12 @@ Vehicle::~Vehicle()
 /************* CAR *************/
 
 Car::Car(string regNr, string color, int nrWheel,
-	string carModel, string carMake)
+	bool nav, bool wash)
 	:Vehicle(regNr, color, nrWheel),
-	carModel(carModel), carMake(carMake)
+	isNav(nav), isWash(wash)
 {
 	LOG("Car ctor called");
 }
-
-
-string Vehicle::vehicleInfo()
-{
-	std::stringstream ss;
-	ss << "\n--> " << getType() << " Info <--"
-		<< "\nRegistration number: " << getRegNr()
-		<< "\nSpecial: " << getVspec1()
-		<< "\nSpecial: " << getVspec2()
-		<< "\nColor: " << getColor()
-		<< "\nNumber of wheels: " << getNrWheel()
-		<< "\n";
-
-	return ss.str();
-}
-
-
-
 
 
 Car::~Car()
@@ -53,9 +49,10 @@ Car::~Car()
 
 /************* Bicycle *************/
 
-Bicycle::Bicycle(string regNr, string color, int nrWheel, string JetEngine, string RollCage)
+Bicycle::Bicycle(string regNr, string color,
+	int nrWheel, string jetEngine, string rollCage)
 	:Vehicle(regNr, color, nrWheel),
-	JetEngine(JetEngine), RollCage(RollCage)
+	jetEngine(jetEngine), rollCage(rollCage)
 {
 	LOG("Bicycle ctor called");
 }

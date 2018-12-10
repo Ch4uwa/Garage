@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Vehicle.h"
 
+
 class Garage
 {
 private:
@@ -18,7 +19,7 @@ public:
 	add vehicle, remove vehicle*/
 
 	// Methods
-
+	void add(){ Vehicle* car = new Car("abc123", "blue", 4, 1, 1); }
 
 };
 

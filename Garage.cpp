@@ -9,5 +9,6 @@ Garage::Garage(string garName, int garSize)
 
 Garage::~Garage()
 {
+	
 	LOG("Garage dtor");
 }

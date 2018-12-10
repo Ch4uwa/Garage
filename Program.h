@@ -17,7 +17,7 @@ public:
 
 	// Methods
 	void init();
-	int input()const;
+	int input();
 	void startMenu();
 	void addMenu();
 	void searchMenu();
