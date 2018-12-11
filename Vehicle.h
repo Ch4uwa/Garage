@@ -6,27 +6,25 @@
 class Vehicle
 {
 protected:
-	string regNr;
-	string color;
-	string type;
+	string name, regNr, color;
 	int nrWheel;
 
 public:
-	Vehicle(string regNr, string color, int nrWheel);
+	Vehicle(string name, string regNr, string color, int nrWheel);
 	virtual ~Vehicle();
 
 	// Virtuals
 	virtual string vehicleInfo();
 
 	// Virtual getters
+	virtual string getName()const = 0;
+	virtual string getRegNr()const = 0;
+	virtual string getColor()const = 0;
+	virtual string getType()const = 0;
+	virtual int getNrWheel()const = 0;
 	virtual string getVspec1()const = 0;
 	virtual string getVspec2()const = 0;
-	virtual string getRegNr()const = 0;
-	virtual string getType()const = 0;
-	virtual string getColor()const = 0;
-	virtual int getNrWheel()const = 0;
 
-	// Mutator
 
 };
 
@@ -36,12 +34,11 @@ public:
 class Car : public Vehicle
 {
 private:
-	bool isNav;
-	bool isWash;
+	bool isNav, isWash;
 	const string type{ "Car" };
 
 public:
-	Car(string regNr, string color, int nrWheel,
+	Car(string name, string regNr, string color, int nrWheel,
 		bool nav, bool wash);
 	~Car();
 
@@ -55,6 +52,7 @@ public:
 	{
 		return this->isNav ? "Have GPS" : "No GPS";
 	}
+	virtual string getName()const override { return this->name; };
 	inline string getRegNr()const override { return this->regNr; };
 	inline string getType()const override { return this->type; };
 	inline string getColor()const override { return this->color; };
@@ -72,13 +70,14 @@ private:
 	string rollCage;
 	const string type{ "Bicycle" };
 public:
-	Bicycle(string regNr, string color, int nrWheel,
+	Bicycle(string name, string regNr, string color, int nrWheel,
 		string jetEngine, string rollCage);
 	~Bicycle();
 
 	// Accessors
 	string getVspec1()const override { return this->jetEngine; };
 	string getVspec2()const override { return this->rollCage; };
+	virtual string getName()const override { return this->name; };
 	inline string getRegNr()const override { return this->regNr; };
 	inline string getType()const override { return this->type; };
 	inline string getColor()const override { return this->color; };

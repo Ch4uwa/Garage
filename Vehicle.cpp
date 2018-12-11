@@ -1,8 +1,8 @@
 #include "Vehicle.h"
 
 
-Vehicle::Vehicle(string regNr, string color, int nrWheel)
-	:regNr(regNr), color(color), nrWheel(nrWheel), type("")
+Vehicle::Vehicle(string name, string regNr, string color, int nrWheel)
+	:name(name), regNr(regNr), color(color), nrWheel(nrWheel)
 {
 	LOG("Vehicle ctor");
 }
@@ -12,10 +12,11 @@ string Vehicle::vehicleInfo()
 	std::stringstream ss;
 	ss << "\n--> " << getType() << " Info <--"
 		<< "\nRegistration number: " << getRegNr()
-		<< "\n" << getVspec1()
-		<< "\n" << getVspec2()
+		<< "\nName: " << getName()
 		<< "\nColor: " << getColor()
 		<< "\nNumber of wheels: " << getNrWheel()
+		<< "\n" << getVspec1()
+		<< "\n" << getVspec2()
 		<< "\n";
 
 	return ss.str();
@@ -31,9 +32,9 @@ Vehicle::~Vehicle()
 
 /************* CAR *************/
 
-Car::Car(string regNr, string color, int nrWheel,
+Car::Car(string name, string regNr, string color, int nrWheel,
 	bool nav, bool wash)
-	:Vehicle(regNr, color, nrWheel),
+	:Vehicle(name, regNr, color, nrWheel),
 	isNav(nav), isWash(wash)
 {
 	LOG("Car ctor called");
@@ -49,9 +50,9 @@ Car::~Car()
 
 /************* Bicycle *************/
 
-Bicycle::Bicycle(string regNr, string color,
+Bicycle::Bicycle(string name, string regNr, string color,
 	int nrWheel, string jetEngine, string rollCage)
-	:Vehicle(regNr, color, nrWheel),
+	:Vehicle(name, regNr, color, nrWheel),
 	jetEngine(jetEngine), rollCage(rollCage)
 {
 	LOG("Bicycle ctor called");
