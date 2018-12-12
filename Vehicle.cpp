@@ -41,24 +41,13 @@ Car::Car(string name, string regNr, string color, int nrWheel,
 }
 
 
-Car::~Car()
-{
-	LOG("Car dtor called");
-}
-
-
 
 /************* Bicycle *************/
 
 Bicycle::Bicycle(string name, string regNr, string color,
-	int nrWheel, string jetEngine, string rollCage)
+	int nrWheel, bool jetEngine, bool rollCage)
 	:Vehicle(name, regNr, color, nrWheel),
 	jetEngine(jetEngine), rollCage(rollCage)
 {
 	LOG("Bicycle ctor called");
-}
-
-Bicycle::~Bicycle()
-{
-	LOG("Bicycle dtor called");
 }

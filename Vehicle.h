@@ -40,7 +40,8 @@ private:
 public:
 	Car(string name, string regNr, string color, int nrWheel,
 		bool nav, bool wash);
-	~Car();
+	~Car() { LOG("Car dtor called"); }
+
 
 
 	// Accessors
@@ -63,20 +64,27 @@ public:
 };
 
 
+
+/************* Bicycle *************/
 class Bicycle :public Vehicle
 {
 private:
-	string jetEngine;
-	string rollCage;
+	bool jetEngine, rollCage;
 	const string type{ "Bicycle" };
 public:
 	Bicycle(string name, string regNr, string color, int nrWheel,
-		string jetEngine, string rollCage);
-	~Bicycle();
+		bool jetEngine, bool rollCage);
+	~Bicycle() { LOG("Bicycle dtor called"); }
 
 	// Accessors
-	string getVspec1()const override { return this->jetEngine; };
-	string getVspec2()const override { return this->rollCage; };
+	string getVspec1()const override
+	{
+		return this->jetEngine ? "Jet Engine on a Bicycle" : "";
+	}
+	string getVspec2()const override
+	{
+		return this->rollCage ? "??Rollcage?? WHYYY??" : "";
+	}
 	virtual string getName()const override { return this->name; };
 	inline string getRegNr()const override { return this->regNr; };
 	inline string getType()const override { return this->type; };

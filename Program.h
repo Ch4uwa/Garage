@@ -10,10 +10,16 @@ private:
 	int choice;
 	int garSize;
 	string garName;
-	
+	bool active;
+	bool quit;
+	Garage *gar;
 public:
 	Program();
-	~Program();
+	~Program()
+	{
+		delete gar;
+		LOG("Program dtor called");
+	};
 
 	// Methods
 	void init();

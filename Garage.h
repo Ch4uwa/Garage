@@ -3,29 +3,26 @@
 #include "pch.h"
 #include "Vehicle.h"
 
-
 class Garage
 {
 private:
 	int garSize, pSlot;
 	string garName;
 	bool isFull;
-
 	Vehicle **garArr;
 public:
 	/*Constuctor*/
-	Garage(string garName = "hej", int garSize = 10);
+	Garage(string garName = "SuperDuper", int garSize = 12);
 
 	/*Destructor*/
 	~Garage()
 	{
 		LOG("Garage dtor");
-		
-		/*for (int i = 0; i < garSize; i++)
+		for (int i = 0; i < garSize; i++)
 		{
 			delete garArr[i];
 		}
-		delete[] garArr;*/
+		delete[] garArr;
 	}
 
 
@@ -33,14 +30,18 @@ public:
 	add vehicle, remove vehicle*/
 
 	// Methods
-	void newGarage();
-	void add();
+	
+	void freeSlot(int);
+	void add(int);
 	void remove() {}
 	void search() {}
 	void clear() {}
+	bool isEmpty()const;
 	void printAll();
-	void printType()const {}
-	const int &getPslot()const { return this->pSlot; }
+	void printType()const;
+	inline const int &getPslot()const { return this->pSlot; }
+	inline const bool &getIsFull()const { return this->isFull; }
+
 
 };
 
