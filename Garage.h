@@ -25,7 +25,6 @@ public:
 		delete[] garArr;
 	}
 
-
 	/* TODO Search, Print all functions, print types,
 	add vehicle, remove vehicle*/
 
@@ -33,12 +32,16 @@ public:
 	
 	void freeSlot(int);
 	void add(int);
-	void remove() {}
-	void search() {}
-	void clear() {}
-	bool isEmpty()const;
+	void remove();
+	void searchRegNr(string);
+	void searchName(string);
+	void searchColor(string);
+	void searchType(string);
+	void searchNrWheel(int);
+	void clear();
 	void printAll();
 	void printType()const;
+	bool isEmpty()const;
 	inline const int &getPslot()const { return this->pSlot; }
 	inline const bool &getIsFull()const { return this->isFull; }
 

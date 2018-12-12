@@ -1,8 +1,9 @@
 #include "Garage.h"
+#include "Program.h"
 
-
+Program p;
 Garage::Garage(string garName, int garSize)
-	:garName("\n" + garName), garSize(garSize), pSlot(0), isFull(false)
+	:garName(garName), garSize(garSize), pSlot(0), isFull(false)
 {
 	this->garArr = new Vehicle*[garSize];
 	for (int i{}; i < garSize; i++)
@@ -34,10 +35,8 @@ void Garage::freeSlot(int input)
 
 void Garage::add(int input)
 {
-	char error = 'a';
 	string name{ "" }, regNr{ "" }, color{ "" };
-	int	nrWheel{ 0 };
-	bool special1{ 0 }, special2{ 0 };
+	int	nrWheel{ 0 }, special1{ 0 }, special2{ 0 };
 
 	std::cin.ignore(256, '\n');
 
@@ -47,20 +46,8 @@ void Garage::add(int input)
 	getline(std::cin, regNr);
 	std::cout << "Enter color: ";
 	getline(std::cin, color);
-
-	try
-	{
-		std::cout << "Enter number of wheels: ";
-		std::cin >> nrWheel;
-		if (!std::cin)
-			throw error;
-	}
-	catch (...)
-	{
-		std::cout << "ERROR Input numeric value.";
-		std::cin.clear();
-		std::cin.ignore(256, '\n');
-	}
+	std::cout << "Enter number of wheels: ";
+	nrWheel = p.input();
 
 	switch (input)
 	{
@@ -69,25 +56,108 @@ void Garage::add(int input)
 	case 1: // CAR
 	{
 		std::cout << "Do you have nav system?\n1. Yes\n0. No";
-		std::cin >> special1;
+		if (p.input() > 0)
+		{
+			special1 = 1;
+		}
+		else
+		{
+			special1 = 0;
+		}
 		std::cout << "Should we wash your car?\n1. Yes\n0. No";
-		std::cin >> special2;
+		if (p.input() > 0)
+		{
+			special2 = 1;
+		}
+		else
+		{
+			special2 = 0;
+		}
 
 		garArr[pSlot] = new Car(name, regNr, color, nrWheel, special1, special2);
-		std::cout << "Car added to slot: " << pSlot + 1;
+		std::cout << "Your car is parked at P-Slot " << pSlot + 1;
 		break;
 	}
 	case 2://BICYCLE
 	{
 		std::cout << "Do you have a jet engine?\n1. Yes\n0. No";
-		std::cin >> special1;
+		if (p.input() > 0) { special1 = 1; }
+		else { special1 = 0; }
+
 		std::cout << "Is there a rollcage?\n1. Yes\n0. No";
-		std::cin >> special2;
+		if (p.input() > 0) { special2 = 1; }
+		else { special2 = 0; }
 
 		garArr[pSlot] = new Bicycle(name, regNr, color, nrWheel, special1, special2);
-		std::cout << "Bicycle added to slot: " << pSlot + 1;
+		std::cout << "Your bicycle is parked at P-Slot: " << pSlot + 1;
 		break;
 	}
+	}
+}
+
+void Garage::remove()
+{
+
+}
+
+void Garage::searchRegNr(string regNr)
+{
+	while (garArr[pSlot]->getRegNr() != regNr && pSlot < garSize)
+	{
+		pSlot++;
+	}
+	std::cout << "\n" << pSlot + 1 << ". " << garArr[pSlot]->vehicleInfo();
+}
+
+void Garage::searchColor(string color)
+{
+	for (int i = 0; i < garSize; i++)
+	{
+		if (garArr[i]->getColor() == color)
+		{
+			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+		}
+	}
+}
+
+void Garage::searchName(string name)
+{
+	for (int i = 0; i < garSize; i++)
+	{
+		if (garArr[i]->getName() == name)
+		{
+			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+		}
+	}
+}
+
+void Garage::searchType(string type)
+{
+	for (int i = 0; i < garSize; i++)
+	{
+		if (garArr[i]->getType() == type)
+		{
+			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+		}
+	}
+}
+
+void Garage::searchNrWheel(int nrWheel)
+{
+	for (int i = 0; i < garSize; i++)
+	{
+		if (garArr[i]->getNrWheel() == nrWheel)
+		{
+			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+		}
+	}
+}
+
+void Garage::clear()
+{
+	for (int i = 0; i < garSize; i++)
+	{
+		garArr[i] = 0;
 	}
 }
 
@@ -155,4 +225,5 @@ bool Garage::isEmpty()const
 			return false;
 		}
 	}
+	return true;
 }

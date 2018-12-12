@@ -27,25 +27,18 @@ Vehicle::~Vehicle()
 	LOG("Vehicle dtor");
 }
 
-
-
-
 /************* CAR *************/
-
 Car::Car(string name, string regNr, string color, int nrWheel,
-	bool nav, bool wash)
+	int nav, int wash)
 	:Vehicle(name, regNr, color, nrWheel),
 	isNav(nav), isWash(wash)
 {
 	LOG("Car ctor called");
 }
 
-
-
 /************* Bicycle *************/
-
 Bicycle::Bicycle(string name, string regNr, string color,
-	int nrWheel, bool jetEngine, bool rollCage)
+	int nrWheel, int jetEngine, int rollCage)
 	:Vehicle(name, regNr, color, nrWheel),
 	jetEngine(jetEngine), rollCage(rollCage)
 {

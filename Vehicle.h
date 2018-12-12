@@ -39,7 +39,7 @@ private:
 
 public:
 	Car(string name, string regNr, string color, int nrWheel,
-		bool nav, bool wash);
+		int nav, int wash);
 	~Car() { LOG("Car dtor called"); }
 
 
@@ -63,8 +63,6 @@ public:
 
 };
 
-
-
 /************* Bicycle *************/
 class Bicycle :public Vehicle
 {
@@ -73,7 +71,7 @@ private:
 	const string type{ "Bicycle" };
 public:
 	Bicycle(string name, string regNr, string color, int nrWheel,
-		bool jetEngine, bool rollCage);
+		int jetEngine, int rollCage);
 	~Bicycle() { LOG("Bicycle dtor called"); }
 
 	// Accessors
