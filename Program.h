@@ -3,18 +3,18 @@
 #include "pch.h"
 #include "Garage.h"
 
-
 class Program
 {
 private:
-	int choice;
 	int garSize;
 	string garName;
-	bool active;
-	bool quit;
+	const enum VEHICLES { QUIT = 0, CAR = 1, BIKE, MC, BUS, TRUCK };
+	bool active, quit;
 	Garage *gar;
 public:
-	Program();
+	/* Constructor */
+	Program(string garName = "NONAME", int garSize = 12);
+	/* Destructor */
 	~Program()
 	{
 		delete gar;
@@ -23,15 +23,16 @@ public:
 
 	// Methods
 	void init();
-	int input();
 	void startMenu();
 	void addMenu();
 	void searchMenu();
 	void eraseMenu();
 
+	int input();
 	// Getter
-	inline string getGarName() { return this->garName; }
-	inline int getGarSize() { return this->garSize; }
+	inline string getGarName()const { return this->garName; }
+	inline int getGarSize()const { return this->garSize; }
+
 
 	// Mutator
 

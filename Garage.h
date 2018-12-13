@@ -6,9 +6,9 @@
 class Garage
 {
 private:
-	int garSize, pSlot;
-	string garName;
-	bool isFull;
+	int garSize, pSlot, free, taken;
+	string garName, uInput;
+	bool result;
 	Vehicle **garArr;
 public:
 	/*Constuctor*/
@@ -25,26 +25,21 @@ public:
 		delete[] garArr;
 	}
 
-	/* TODO Search, Print all functions, print types,
-	add vehicle, remove vehicle*/
-
 	// Methods
-	
+	string StringToUpper(string);
 	void freeSlot(int);
 	void add(int);
-	void remove();
-	void searchRegNr(string);
-	void searchName(string);
-	void searchColor(string);
-	void searchType(string);
-	void searchNrWheel(int);
+	void remove(int);
+	void searchRegNr();
+	void searchString();
+	void searchNrWheel();
 	void clear();
 	void printAll();
 	void printType()const;
 	bool isEmpty()const;
-	inline const int &getPslot()const { return this->pSlot; }
-	inline const bool &getIsFull()const { return this->isFull; }
-
+	bool isFull()const;
+	/* Accessor */
+	const string getPamt();
 
 };
 

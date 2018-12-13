@@ -3,7 +3,7 @@
 
 Program p;
 Garage::Garage(string garName, int garSize)
-	:garName(garName), garSize(garSize), pSlot(0), isFull(false)
+	:garName(garName), garSize(garSize), pSlot(0), result(true)
 {
 	this->garArr = new Vehicle*[garSize];
 	for (int i{}; i < garSize; i++)
@@ -12,19 +12,15 @@ Garage::Garage(string garName, int garSize)
 	}
 	LOG("Garage ctor");
 }
-
+/*-------- Looks for a free P-Spot, to add too --------*/
 void Garage::freeSlot(int input)
 {
+	pSlot = 0;
 	while (garArr[pSlot] != 0 && pSlot < garSize)
 	{
 		if (garArr[pSlot] != 0)
 		{
 			pSlot++;
-		}
-		if (pSlot == garSize)
-		{
-			std::cout << "\nNo available P-Spot\n";
-			isFull = true;
 		}
 	}
 	if (garArr[pSlot] == 0)
@@ -33,21 +29,25 @@ void Garage::freeSlot(int input)
 	}
 }
 
+/*-------- Adds Vehicles --------*/
 void Garage::add(int input)
 {
 	string name{ "" }, regNr{ "" }, color{ "" };
 	int	nrWheel{ 0 }, special1{ 0 }, special2{ 0 };
 
 	std::cin.ignore(256, '\n');
-
 	std::cout << "Enter make: ";
-	getline(std::cin, name);
+	getline(std::cin, uInput);
+	name = StringToUpper(uInput);
 	std::cout << "Enter registration number: ";
-	getline(std::cin, regNr);
+	getline(std::cin, uInput);
+	regNr = StringToUpper(uInput);
 	std::cout << "Enter color: ";
-	getline(std::cin, color);
+	getline(std::cin, uInput);
+	color = StringToUpper(uInput);
 	std::cout << "Enter number of wheels: ";
 	nrWheel = p.input();
+
 
 	switch (input)
 	{
@@ -56,23 +56,12 @@ void Garage::add(int input)
 	case 1: // CAR
 	{
 		std::cout << "Do you have nav system?\n1. Yes\n0. No";
-		if (p.input() > 0)
-		{
-			special1 = 1;
-		}
-		else
-		{
-			special1 = 0;
-		}
+		if (p.input() > 0) { special1 = 1; }
+		else { special1 = 0; }
+
 		std::cout << "Should we wash your car?\n1. Yes\n0. No";
-		if (p.input() > 0)
-		{
-			special2 = 1;
-		}
-		else
-		{
-			special2 = 0;
-		}
+		if (p.input() > 0) { special2 = 1; }
+		else { special2 = 0; }
 
 		garArr[pSlot] = new Car(name, regNr, color, nrWheel, special1, special2);
 		std::cout << "Your car is parked at P-Slot " << pSlot + 1;
@@ -94,80 +83,110 @@ void Garage::add(int input)
 	}
 	}
 }
-
-void Garage::remove()
+/*-------- Remove specific vehicle --------*/
+void Garage::remove(int pSlot)
 {
-
+	delete garArr[pSlot];
+	garArr[pSlot] = 0;
 }
-
-void Garage::searchRegNr(string regNr)
+/*-------- Search methods --------*/
+void Garage::searchRegNr()
 {
-	while (garArr[pSlot]->getRegNr() != regNr && pSlot < garSize)
-	{
-		pSlot++;
-	}
-	std::cout << "\n" << pSlot + 1 << ". " << garArr[pSlot]->vehicleInfo();
-}
+	result = false;
+	std::cin.ignore(256, '\n');
+	std::cout << "Enter registration number to search: ";
+	getline(std::cin, uInput);
+	uInput = StringToUpper(uInput);
 
-void Garage::searchColor(string color)
-{
 	for (int i = 0; i < garSize; i++)
 	{
-		if (garArr[i]->getColor() == color)
+		if (garArr[i] != 0)
 		{
-			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+			if (garArr[i]->getRegNr() == uInput)
+			{
+				pSlot = i;
+				result = true;
+				std::cout << "\nSearch result: At P-Space: " << pSlot + 1 << ". " << garArr[pSlot]->vehicleInfo()
+					<< "\nDo you want to remove this vehicle from the garage?"
+					<< "\n1. Yes\n0. No\n";
+				
+				if (p.input() > 0) { remove(pSlot); }
+
+			}
 		}
 	}
+	if (!result)
+	{
+		std::cout << "\nThese are not the attributes you are looking for.";
+	}
 }
-
-void Garage::searchName(string name)
+void Garage::searchString()
 {
+	result = false;
+	std::cin.ignore(256, '\n');
+	std::cout << "Enter make, color or type to search for: ";
+	getline(std::cin, uInput);
+	uInput = StringToUpper(uInput);
+
 	for (int i = 0; i < garSize; i++)
 	{
-		if (garArr[i]->getName() == name)
+		if (garArr[i] != 0)
 		{
-			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+			if (garArr[i]->getColor() == uInput || garArr[i]->getName() == uInput
+				|| garArr[i]->getType() == uInput)
+			{
+				result = true;
+				std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+			}
 		}
 	}
+	if(!result)
+	{
+		std::cout << "\nThese are not the attributes you are looking for.";
+	}
 }
-
-void Garage::searchType(string type)
+void Garage::searchNrWheel()
 {
+	result = false;
+	std::cin.ignore(256, '\n');
+	std::cout << "Enter number of wheels to search for: ";
+	int nrWheel = p.input();
+
 	for (int i = 0; i < garSize; i++)
 	{
-		if (garArr[i]->getType() == type)
+		if (garArr[i] != 0)
 		{
-			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+			if (nrWheel == garArr[i]->getNrWheel())
+			{
+				result = true;
+				std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
+			}
 		}
 	}
-}
-
-void Garage::searchNrWheel(int nrWheel)
-{
-	for (int i = 0; i < garSize; i++)
+	if (!result)
 	{
-		if (garArr[i]->getNrWheel() == nrWheel)
-		{
-			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo();
-		}
+		std::cout << "\nThese are not the wheels you are looking for.";
 	}
 }
 
+/*-------- Clears the garage --------*/
 void Garage::clear()
 {
 	for (int i = 0; i < garSize; i++)
 	{
+		delete garArr[i];
 		garArr[i] = 0;
 	}
 }
 
+/*-------- Prints all vehicles in garage --------*/
 void Garage::printAll()
 {
 	for (int i = 0; i < this->garSize; i++)
 	{
 		if (garArr[i] != 0)
 		{
-			std::cout << "\n" << i + 1 << ". " << garArr[i]->vehicleInfo() << "\n";
+			std::cout << "\n" << i + 1 << ".\n" << garArr[i]->vehicleInfo();
 		}
 		else if (garArr[i] == 0)
 		{
@@ -180,6 +199,7 @@ void Garage::printAll()
 	}
 }
 
+/*-------- Prints amount of types in garage --------*/
 void Garage::printType() const
 {
 	int cars{};
@@ -191,11 +211,11 @@ void Garage::printType() const
 		{
 			if (garArr[i] != 0)
 			{
-				if (garArr[i]->getType() == "Car")
+				if (garArr[i]->getType() == "CAR")
 				{
 					cars++;
 				}
-				if (garArr[i]->getType() == "Bicycle")
+				if (garArr[i]->getType() == "BICYCLE")
 				{
 					bicycles++;
 				}
@@ -218,12 +238,53 @@ void Garage::printType() const
 
 bool Garage::isEmpty()const
 {
-	for (int i = 0; i < garSize; i++)
+	if (free == garSize)
 	{
-		if (garArr[i] != 0)
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Garage::isFull()const
+{
+	if (free == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/*-------- Prints number of free spots and parked cars.*/
+const string Garage::getPamt()
+{
+	free = 0;
+	taken = 0;
+
+	for (int i{ 0 }; i < garSize; i++)
+	{
+		if (garArr[i] == 0)
 		{
-			return false;
+			free++;
+		}
+		else if (garArr[i] != 0)
+		{
+			taken++;
 		}
 	}
-	return true;
+	return "\nFree space: " + std::to_string(free) + "/" + std::to_string(garSize) +
+		"\nTotal Parked: " + std::to_string(taken) + "/" + std::to_string(garSize);
+}
+
+/* Convertes string to uppercase */
+string Garage::StringToUpper(string strToConvert)
+{
+	std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(), ::toupper);
+
+	return strToConvert;
 }

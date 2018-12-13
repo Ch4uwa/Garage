@@ -2,15 +2,17 @@
 
 
 
-Program::Program()
-	:choice(0), garName(""), garSize(0), active(true)
+Program::Program(string garName, int garSize)
+	:garName(garName), garSize(garSize), active(true), quit(false)
 {
-	LOG("Program ctor called");
+	LOG("Program ctor");
 
 }
 
+/*-------- int input handler --------*/
 int Program::input()
 {
+	int choice{};
 	std::cout << "\n--> ";
 	while (!(std::cin >> choice) || choice < 0)
 	{
@@ -22,11 +24,12 @@ int Program::input()
 	return choice;
 }
 
+/*-------- Initialize --------*/
 void Program::init()
 {
-	std::cout << "Enter garage name: ";
+	std::cout << "Enter garage name:\n-->";
 	getline(std::cin, garName);
-	std::cout << "Enter garage size: ";
+	std::cout << "Enter garage size:";
 	garSize = input();
 	gar = new Garage(garName, garSize);
 	startMenu();
@@ -36,26 +39,28 @@ void Program::startMenu()
 {
 	do
 	{
-		std::cout << "\n" << this->garName
+		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n-------- Main Menu --------"
 			<< "\n1. Add"
 			<< "\n2. Search"
 			<< "\n3. Print all"
 			<< "\n4. Print types"
+			<< "\n5. Remove"
 			<< "\n0. EXIT";
 
 		switch (input())
 		{
 		default:
+			std::cout << "\nFaulty input value.\n";
 			break;
 		case 1:
-			if (!(gar->getIsFull()))
+			if (gar->isFull())
 			{
-				addMenu();
+				std::cout << "\nGarage is full.\n";
 			}
 			else
 			{
-				std::cout << "\nGarage is full.\n";
+				addMenu();
 			}
 			break;
 		case 2:
@@ -74,8 +79,17 @@ void Program::startMenu()
 		case 4:
 			gar->printType();
 			break;
+		case 5:
+			if (gar->isEmpty())
+			{
+				std::cout << "Garage is empty";
+			}
+			else
+			{
+				eraseMenu();
+			}
+			break;
 		case 0:
-			LOG("Exit program");
 			quit = true;
 			break;
 		}
@@ -87,30 +101,35 @@ void Program::addMenu()
 	active = true;
 	while (active)
 	{
-		std::cout << "\n" << this->garName
+		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n-------- Add Menu --------"
 			<< "\n1. Car"
 			<< "\n2. Bicycle"
-			<< "\n3. "
-			<< "\n4. "
+			<< "\n3. Motorcycle"
+			<< "\n4. Bus"
+			<< "\n5. Truck"
 			<< "\n0. Back";
 		switch (input())
 		{
 		default:
+			std::cout << "\nFaulty input value.\n";
 			break;
-		case 1:
-			gar->freeSlot(1);
+		case CAR: // Car
+			gar->freeSlot(CAR);
 			break;
-		case 2:
-			gar->freeSlot(2);
+		case BIKE: // Bicycle
+			gar->freeSlot(BIKE);
 			break;
-		case 3:
+		case MC: // MC
 			//gar->freeSlot(3);
 			break;
-		case 4:
+		case BUS: // Bus
 			//gar->freeSlot(4);
 			break;
-		case 0:
+		case TRUCK: // Truck
+			//gar->freeSlot(5);
+			break;
+		case QUIT:
 			active = false;
 			break;
 		}
@@ -120,20 +139,16 @@ void Program::addMenu()
 
 void Program::searchMenu()
 {
-	string regNr, make, color, type;
-	int nrWheel{ 0 };
 
 	active = true;
 	while (active)
 	{
-		std::cout << "\n" << this->garName
+		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n-------- Search --------"
 			<< "\n1. Registration number"
-			<< "\n2. Color"
-			<< "\n3. Type"
-			<< "\n4. Number of wheels"
-			<< "\n5. Make"
-			<< "\n6. Print all vehicles in garage"
+			<< "\n2. Make, Color or type"
+			<< "\n3. Number of wheels"
+			<< "\n4. Print all vehicles in garage"
 			<< "\n0. Back";
 		switch (input())
 		{
@@ -141,41 +156,18 @@ void Program::searchMenu()
 			std::cout << "\nFaulty input value.\n";
 			break;
 		case 1:
-			std::cin.ignore(256, '\n');
-			std::cout << "Enter registration number to search: ";
-			getline(std::cin, regNr);
-			gar->searchRegNr(regNr);
+			gar->searchRegNr();
 			break;
 		case 2:
-			std::cin.ignore(256, '\n');
-			std::cout << "Enter color to search: ";
-			getline(std::cin, color);
-			gar->searchColor(color);
+			gar->searchString();
 			break;
 		case 3:
-			std::cin.ignore(256, '\n');
-			std::cout << "Enter type to search: ";
-			getline(std::cin, type);
-			gar->searchType(type);
+			gar->searchNrWheel();
 			break;
 		case 4:
-			std::cin.ignore(256, '\n');
-			std::cout << "Enter number of wheels to search: ";
-			nrWheel = input();
-			gar->searchNrWheel(nrWheel);
-			break;
-		case 5:
-			std::cin.ignore(256, '\n');
-			std::cout << "Enter make to search: ";
-			getline(std::cin, make);
-			gar->searchName(make);
-
-			break;
-		case 6:
 			gar->printAll();
 			break;
 		case 0:
-			LOG("Back");
 			active = false;
 			break;
 		}
@@ -184,20 +176,29 @@ void Program::searchMenu()
 
 void Program::eraseMenu()
 {
-	std::cout << "\n" << this->garName
-		<< "\n-------- Remove --------"
-		<< "\n1. "
-		<< "\n2. "
-		<< "\n3. "
-		<< "\n4. "
-		<< "\n0. Back";
-
-	switch (input())
+	active = true;
+	while (active)
 	{
-	default:
-		break;
-	case 0:
-		LOG("Back");
-		break;
+		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
+			<< "\n-------- Remove --------"
+			<< "\n1. Remove all"
+			<< "\n2. SEEK AND DESTOY"
+			<< "\n0. Back";
+
+		switch (input())
+		{
+		default:
+			std::cout << "\nFaulty input value.\n";
+			break;
+		case 1:
+			gar->clear();
+			break;
+		case 2:
+			gar->searchRegNr();
+			break;
+		case 0:
+			active = false;
+			break;
+		}
 	}
 }

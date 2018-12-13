@@ -10,14 +10,15 @@ Vehicle::Vehicle(string name, string regNr, string color, int nrWheel)
 string Vehicle::vehicleInfo()
 {
 	std::stringstream ss;
-	ss << "\n--> " << getType() << " Info <--"
+	ss << "========================================"
+		<< "\n--> " << getType() << " Info <--"
 		<< "\nRegistration number: " << getRegNr()
 		<< "\nName: " << getName()
 		<< "\nColor: " << getColor()
 		<< "\nNumber of wheels: " << getNrWheel()
 		<< "\n" << getVspec1()
 		<< "\n" << getVspec2()
-		<< "\n";
+		<< "\n========================================\n";
 
 	return ss.str();
 }

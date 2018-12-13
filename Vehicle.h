@@ -10,13 +10,16 @@ protected:
 	int nrWheel;
 
 public:
+	/* Constructor */
 	Vehicle(string name, string regNr, string color, int nrWheel);
+	
+	/* Virtual destructor, otherwise derived class destructor wont run.*/
 	virtual ~Vehicle();
 
-	// Virtuals
+	// Virtual Method
 	virtual string vehicleInfo();
 
-	// Virtual getters
+	// Virtual accessors
 	virtual string getName()const = 0;
 	virtual string getRegNr()const = 0;
 	virtual string getColor()const = 0;
@@ -35,7 +38,7 @@ class Car : public Vehicle
 {
 private:
 	bool isNav, isWash;
-	const string type{ "Car" };
+	const string type{ "CAR" };
 
 public:
 	Car(string name, string regNr, string color, int nrWheel,
@@ -68,7 +71,7 @@ class Bicycle :public Vehicle
 {
 private:
 	bool jetEngine, rollCage;
-	const string type{ "Bicycle" };
+	const string type{ "BICYCLE" };
 public:
 	Bicycle(string name, string regNr, string color, int nrWheel,
 		int jetEngine, int rollCage);
@@ -77,11 +80,11 @@ public:
 	// Accessors
 	string getVspec1()const override
 	{
-		return this->jetEngine ? "Jet Engine on a Bicycle" : "";
+		return this->jetEngine ? "Has Jet Engine" : "";
 	}
 	string getVspec2()const override
 	{
-		return this->rollCage ? "??Rollcage?? WHYYY??" : "";
+		return this->rollCage ? "Good safety! Rollcage" : "";
 	}
 	virtual string getName()const override { return this->name; };
 	inline string getRegNr()const override { return this->regNr; };
