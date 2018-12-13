@@ -8,12 +8,12 @@ class Program
 private:
 	int garSize;
 	string garName;
-	const enum VEHICLES { QUIT = 0, CAR = 1, BIKE, MC, BUS, TRUCK };
+	const enum VEHICLES { QUIT = 0, CAR = 1, BIKE, MC, BUS, EXCAVATOR };
 	bool active, quit;
 	Garage *gar;
 public:
 	/* Constructor */
-	Program(string garName = "NONAME", int garSize = 12);
+	Program();
 	/* Destructor */
 	~Program()
 	{
@@ -28,7 +28,7 @@ public:
 	void searchMenu();
 	void eraseMenu();
 
-	int input();
+	static int input();
 	// Getter
 	inline string getGarName()const { return this->garName; }
 	inline int getGarSize()const { return this->garSize; }

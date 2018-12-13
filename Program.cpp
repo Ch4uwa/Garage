@@ -2,8 +2,8 @@
 
 
 
-Program::Program(string garName, int garSize)
-	:garName(garName), garSize(garSize), active(true), quit(false)
+Program::Program()
+	:garName("NONAME"), garSize(0), active(true), quit(false)
 {
 	LOG("Program ctor");
 
@@ -18,7 +18,7 @@ int Program::input()
 	{
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
-		std::cerr << "<ERROR>\nEnter positiv numeric value.";
+		std::cerr << "<ERROR> Enter positiv numeric value.";
 		std::cout << "\n--> ";
 	}
 	return choice;
@@ -39,13 +39,14 @@ void Program::startMenu()
 {
 	do
 	{
-		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
-			<< "\n-------- Main Menu --------"
+		std::cout << "\n-------- Main Menu --------"
+			<< "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n1. Add"
 			<< "\n2. Search"
 			<< "\n3. Print all"
-			<< "\n4. Print types"
-			<< "\n5. Remove"
+			<< "\n4. Print parked"
+			<< "\n5. Print types"
+			<< "\n6. Remove"
 			<< "\n0. EXIT";
 
 		switch (input())
@@ -77,9 +78,19 @@ void Program::startMenu()
 			gar->printAll();
 			break;
 		case 4:
-			gar->printType();
+			if (!(gar->isEmpty()))
+			{
+				gar->printParked();
+			}
+			else
+			{
+				std::cout << "Garage is empty";
+			}
 			break;
 		case 5:
+			gar->printType();
+			break;
+		case 6:
 			if (gar->isEmpty())
 			{
 				std::cout << "Garage is empty";
@@ -101,13 +112,17 @@ void Program::addMenu()
 	active = true;
 	while (active)
 	{
-		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
-			<< "\n-------- Add Menu --------"
+		if (gar->isFull())
+		{
+			active = false;
+		}
+		std::cout << "\n-------- Add Menu --------"
+			<< "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n1. Car"
 			<< "\n2. Bicycle"
 			<< "\n3. Motorcycle"
 			<< "\n4. Bus"
-			<< "\n5. Truck"
+			<< "\n5. Excavator"
 			<< "\n0. Back";
 		switch (input())
 		{
@@ -121,13 +136,13 @@ void Program::addMenu()
 			gar->freeSlot(BIKE);
 			break;
 		case MC: // MC
-			//gar->freeSlot(3);
+			gar->freeSlot(MC);
 			break;
 		case BUS: // Bus
-			//gar->freeSlot(4);
+			gar->freeSlot(BUS);
 			break;
-		case TRUCK: // Truck
-			//gar->freeSlot(5);
+		case EXCAVATOR: // Excavator
+			gar->freeSlot(EXCAVATOR);
 			break;
 		case QUIT:
 			active = false;
@@ -139,16 +154,19 @@ void Program::addMenu()
 
 void Program::searchMenu()
 {
-
 	active = true;
 	while (active)
 	{
-		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
-			<< "\n-------- Search --------"
+		if (gar->isEmpty())
+		{
+			active = false;
+		}
+		std::cout << "\n-------- Search Menu --------"
+			<< "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n1. Registration number"
 			<< "\n2. Make, Color or type"
 			<< "\n3. Number of wheels"
-			<< "\n4. Print all vehicles in garage"
+			<< "\n4. Print parked"
 			<< "\n0. Back";
 		switch (input())
 		{
@@ -165,7 +183,14 @@ void Program::searchMenu()
 			gar->searchNrWheel();
 			break;
 		case 4:
-			gar->printAll();
+			if (!(gar->isEmpty()))
+			{
+				gar->printParked();
+			}
+			else
+			{
+				std::cout << "Garage is empty";
+			}
 			break;
 		case 0:
 			active = false;
@@ -179,10 +204,15 @@ void Program::eraseMenu()
 	active = true;
 	while (active)
 	{
-		std::cout << "\n<" << this->garName << ">" << gar->getPamt()
-			<< "\n-------- Remove --------"
+		if (gar->isEmpty())
+		{
+			active = false;
+		}
+		std::cout << "\n-------- Remove Menu --------"
+			<< "\n<" << this->garName << ">" << gar->getPamt()
 			<< "\n1. Remove all"
 			<< "\n2. SEEK AND DESTOY"
+			<< "\n3. Print parked"
 			<< "\n0. Back";
 
 		switch (input())
@@ -195,6 +225,16 @@ void Program::eraseMenu()
 			break;
 		case 2:
 			gar->searchRegNr();
+			break;
+		case 3:
+			if (!(gar->isEmpty()))
+			{
+				gar->printParked();
+			}
+			else
+			{
+				std::cout << "Garage is empty";
+			}
 			break;
 		case 0:
 			active = false;

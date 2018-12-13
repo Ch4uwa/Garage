@@ -35,6 +35,7 @@ public:
 	void searchNrWheel();
 	void clear();
 	void printAll();
+	void printParked();
 	void printType()const;
 	bool isEmpty()const;
 	bool isFull()const;
