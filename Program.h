@@ -7,17 +7,17 @@ class Program
 {
 private:
 	int garSize;
+	size_t activeGar;
 	string garName;
 	const enum VEHICLES { QUIT = 0, CAR = 1, BIKE, MC, BUS, EXCAVATOR };
 	bool active, quit;
-	Garage *gar;
+	std::vector<std::shared_ptr<Garage>>garage;
 public:
 	/* Constructor */
 	Program();
 	/* Destructor */
 	~Program()
 	{
-		delete gar;
 		LOG("Program dtor called");
 	};
 
@@ -27,7 +27,9 @@ public:
 	void addMenu();
 	void searchMenu();
 	void eraseMenu();
-
+	void manageGarage();
+	void removeGarage();
+	void switchGarage();
 	static int input();
 	// Getter
 	inline string getGarName()const { return this->garName; }

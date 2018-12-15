@@ -12,7 +12,8 @@ private:
 	Vehicle **garArr;
 public:
 	/*Constuctor*/
-	Garage(string garName = "SuperDuper", int garSize = 12);
+	Garage(string garName, int garSize);
+
 
 	/*Destructor*/
 	~Garage()
@@ -26,6 +27,7 @@ public:
 	}
 
 	// Methods
+	//void garInit(string, int);
 	string StringToUpper(string);
 	void freeSlot(int);
 	void add(int);
@@ -41,6 +43,7 @@ public:
 	bool isFull()const;
 	/* Accessor */
 	const string getPamt();
+	inline const string getGarName()const { return this->garName; }
 
 };
 
