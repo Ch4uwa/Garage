@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Vehicle.h"
+#include "Program.h"
 
 
 
@@ -7,10 +7,12 @@
 
 int main()
 {
-	Vehicle* car = new Car("abc123","blue",4,"v40","volvo");
-	std::cout << car->vehicleInfo();
-	
-	delete car;
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	Program p;
 
+	p.init();
+	
+
+	std::cin.ignore();
 	getchar();
 }

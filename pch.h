@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
-
+#include <algorithm>
 
 using string = std::string;
 // LOG
@@ -13,6 +13,7 @@ using string = std::string;
 #else
 #define LOG(x);
 #endif // LOG
+
 
 
 
