@@ -46,6 +46,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Kravspec.txt">
+      <Filter>Source Files</Filter>
+    </Text>
     <Text Include="README.txt">
       <Filter>Source Files</Filter>
     </Text>
