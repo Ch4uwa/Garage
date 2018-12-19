@@ -13,15 +13,6 @@ Garage::Garage(string garName, int garSize)
 	LOG("Garage ctor");
 }
 
-//void Garage::garInit(string garName, int garSize)
-//{
-//	this->garArr = new Vehicle*[garSize];
-//	for (int i{}; i < garSize; i++)
-//	{
-//		this->garArr[i] = 0;
-//	}
-//}
-
 /*-------- Looks for a free P-Spot, to add too --------*/
 void Garage::freeSlot(int input)
 {
