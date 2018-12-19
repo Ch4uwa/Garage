@@ -3,29 +3,39 @@
 #include "pch.h"
 #include "Garage.h"
 
-
 class Program
 {
 private:
-	int choice;
 	int garSize;
+	size_t activeGar;
 	string garName;
-	
-public:
+	enum VEHICLES { QUIT = 0, CAR = 1, BIKE, MC, BUS, EXCAVATOR };
+	bool active, quit;
+	std::vector<std::shared_ptr<Garage>> garage;
+
+  public:
+	/* Constructor */
 	Program();
-	~Program();
+	/* Destructor */
+	~Program()
+	{
+		LOG("Program dtor called");
+	};
 
 	// Methods
 	void init();
-	int input()const;
 	void startMenu();
 	void addMenu();
 	void searchMenu();
 	void eraseMenu();
-
+	void manageGarage();
+	void removeGarage();
+	void switchGarage();
+	static int input();
 	// Getter
-	inline string getGarName() { return this->garName; }
-	inline int getGarSize() { return this->garSize; }
+	inline string getGarName()const { return this->garName; }
+	inline int getGarSize()const { return this->garSize; }
+
 
 	// Mutator
 
