@@ -7,7 +7,8 @@ Remove, add, printall, printtypes.
 ## Kravspecifikation
 En samling av fordon:
 Det ska finnas en funktion ListVehicles som listar samtliga fordon i garaget
-Det ska finnas en funktion ListTypeOfVehicles som listar samtliga olika typer av fordon i garaget och hur många av dessa som står i garaget
+Det ska finnas en funktion ListTypeOfVehicles som listar samtliga olika typer av fordon i garaget 
+och hur många av dessa som står i garaget
 Det ska finnas en funktion AddVehicle som lägger till ett fordon ur garaget
 Det ska finnas en funktion RemoveVehicle som tar bort fordon ur garaget
 Ha en max-gräns som krävs som inparameter vid instansieringen av ett nytt garage
